@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dashboard interativo de vendas, faturamento, marcas e continentes.">
+  <title>Atlas de Vendas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+  <script src="{{ url_for('static', path='app.js') }}" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead">
+      <div class="brand-mark" aria-hidden="true">AV</div>
+      <div>
+        <p class="eyebrow">Inteligência comercial</p>
+        <h1>Atlas de Vendas</h1>
+      </div>
+      <div class="period" id="period">Carregando período…</div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="kicker">Visão executiva</p>
+          <h2>O pulso das vendas,<br><em>mês a mês.</em></h2>
+          <p class="intro">Explore faturamento, volume, marcas e presença global em uma leitura clara dos dados.</p>
+        </div>
+        <div class="filters" aria-label="Filtros do dashboard">
+          <label>Ano<select id="year"><option value="">Todos</option></select></label>
+          <label>Mês<select id="month"><option value="">Todos</option></select></label>
+          <label>Marca<select id="brand"><option value="">Todas</option></select></label>
+          <label>Continente<select id="continent"><option value="">Todos</option></select></label>
+          <button id="clear" type="button">Limpar filtros</button>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Principais indicadores">
+        <article class="metric metric-primary">
+          <span>Faturamento total</span>
+          <strong id="revenue">—</strong>
+          <small id="records">— registros analisados</small>
+        </article>
+        <article class="metric">
+          <span>Quantidade vendida</span>
+          <strong id="quantity">—</strong>
+          <small>unidades no período</small>
+        </article>
+        <article class="metric metric-product">
+          <span>Produto mais vendido</span>
+          <strong id="top-product">—</strong>
+          <small id="top-product-detail">— unidades</small>
+        </article>
+      </section>
+
+      <section class="grid">
+        <article class="panel panel-wide">
+          <div class="panel-head">
+            <div><p class="eyebrow">Evolução</p><h3>Faturamento e volume por mês</h3></div>
+            <div class="legend"><span class="dot coral"></span>Faturamento <span class="dot ink"></span>Quantidade</div>
+          </div>
+          <div id="timeline" class="chart" role="img" aria-label="Gráfico de faturamento e quantidade por mês"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head"><div><p class="eyebrow">Portfólio</p><h3>Faturamento por marca</h3></div></div>
+          <div id="brands" class="bars" role="img" aria-label="Gráfico de faturamento por marca"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head"><div><p class="eyebrow">Alcance</p><h3>Faturamento por continente</h3></div></div>
+          <div id="continents" class="bars continent-bars" role="img" aria-label="Gráfico de faturamento por continente"></div>
+        </article>
+      </section>
+
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+    </main>
+    <footer>Fonte: Vendas.xlsx · API FastAPI <a href="/docs">Documentação da API</a></footer>
+  </div>
+</body>
+</html>
