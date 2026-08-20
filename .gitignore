@@ -1,0 +1,13 @@
+.env
+.coverage
+coverage.xml
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.py[cod]
+node_modules/
+.npm-cache/
+playwright-report/
+test-results/
+reports/

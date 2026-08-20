@@ -1,0 +1,29 @@
+name: Tarefa
+description: Correção, melhoria ou nova funcionalidade
+title: "[tipo]: "
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Tipo
+      options: [Correção, Melhoria, Nova funcionalidade, Manutenção]
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo e contexto
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critérios de aceite
+      placeholder: "- [ ] Critério verificável"
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidências e riscos
+

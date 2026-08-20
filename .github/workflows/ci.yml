@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, main3]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22", cache: npm }
+      - run: pip install -r requirements-dev.txt
+      - run: npm ci
+      - run: ruff check .
+      - run: python scripts/check_architecture.py
+      - run: npm run lint
+      - run: npm run deadcode
+      - name: Validate conventional commits
+        if: github.event_name == 'pull_request'
+        run: npx commitlint --from "${{ github.event.pull_request.base.sha }}" --to "${{ github.event.pull_request.head.sha }}" --verbose
+
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - run: pip install -r requirements-dev.txt
+      - run: coverage run -m pytest -q
+      - run: coverage xml
+      - uses: codecov/codecov-action@v5
+        if: ${{ env.CODECOV_TOKEN != '' }}
+        with:
+          files: coverage.xml
+          fail_ci_if_error: true
+          token: ${{ env.CODECOV_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-coverage
+          path: coverage.xml
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11", cache: pip }
+      - uses: actions/setup-node@v4
+        with: { node-version: "22", cache: npm }
+      - run: pip install -r requirements.txt
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/

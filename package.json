@@ -1,0 +1,20 @@
+{
+  "name": "atlas-dados-quality",
+  "private": true,
+  "scripts": {
+    "lint": "biome check static tests/e2e",
+    "lint:fix": "biome check --write static tests/e2e",
+    "deadcode": "knip",
+    "test:e2e": "playwright test",
+    "test:mutation": "stryker run",
+    "commitlint": "commitlint"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@playwright/test": "^1.55.0",
+    "@stryker-mutator/core": "^9.0.1",
+    "knip": "^5.63.0"
+  }
+}

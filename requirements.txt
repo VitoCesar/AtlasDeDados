@@ -5,3 +5,9 @@ openpyxl==3.1.5
 jinja2==3.1.6
 httpx==0.28.1
 pytest==8.4.1
+python-json-logger==3.3.0
+sentry-sdk[fastapi]==2.35.0
+opentelemetry-api==1.36.0
+opentelemetry-sdk==1.36.0
+opentelemetry-exporter-otlp-proto-http==1.36.0
+opentelemetry-instrumentation-fastapi==0.57b0

@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=2.0.1">
-  <script src="{{ url_for('static', path='app.js') }}?v=2.0.1" defer></script>
+  <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}?v=2.1.0">
+  <script src="{{ url_for('static', path='app.js') }}?v=2.1.0" defer></script>
 </head>
 <body>
   <div class="shell">
@@ -29,7 +29,8 @@
         <div class="filters" id="filters" aria-label="Filtros do dashboard"></div>
       </section>
 
-      <div id="dashboard" aria-live="polite"></div>
+      <div class="load-progress" id="load-progress" role="progressbar" aria-label="Carregamento do dashboard" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div>
+      <div id="dashboard" aria-live="polite" aria-busy="true"></div>
       <div id="status" class="status" role="status" aria-live="polite"></div>
     </main>
     <footer><span id="source-note">Fonte: Vendas.xlsx</span><a href="/docs">Documentação da API</a></footer>
