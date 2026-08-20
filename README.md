@@ -51,6 +51,8 @@ npm run test:e2e
 
 Biome analisa JavaScript, Commitlint valida commits convencionais, Knip detecta código/dependências sem uso, o contrato arquitetural impede dependências e segredos indevidos, e Stryker executa testes de mutação com `npm run test:mutation`. O CI publica cobertura no Codecov.
 
+Para publicar no Codecov, cadastre `CODECOV_TOKEN` nos secrets do repositório. Sem esse segredo, o CI continua validando o limite local e salva `coverage.xml` como artefato, mas pula apenas o envio externo.
+
 ## Observabilidade
 
 Logs são estruturados em JSON e toda resposta inclui `x-request-id`. Sentry e OpenTelemetry ficam desativados quando suas variáveis não estão presentes. Copie `.env.example` para configurar:
