@@ -10,6 +10,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from observability import install_observability
 
 BASE_DIR = Path(__file__).resolve().parent
 SALES_FILE = BASE_DIR / "data" / "Vendas.xlsx"
@@ -83,6 +84,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="API Atlas de Dados", description="Dashboards de vendas e violência construídos a partir de arquivos Excel.", version="2.0.0", lifespan=lifespan)
+install_observability(app)
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
 

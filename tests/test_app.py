@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+
 from app import app
 
 
@@ -12,11 +13,14 @@ def test_health_lists_both_sources():
 def test_frontend_assets_are_versioned_to_prevent_stale_api_calls():
     with TestClient(app) as client:
         html = client.get("/").text
-        assert "app.js?v=2.0.1" in html
-        assert "styles.css?v=2.0.1" in html
+        assert "app.js?v=2.1.0" in html
+        assert "styles.css?v=2.1.0" in html
+        assert 'role="progressbar"' in html
         javascript = client.get("/static/app.js").text
         assert "/api/${source}/filtros" in javascript
         assert 'fetch("/api/filtros")' not in javascript
+        assert "dashboardSkeleton" in javascript
+        assert "IntersectionObserver" in javascript
 
 
 def test_violence_filters_are_json_serializable():
